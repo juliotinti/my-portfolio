@@ -1,0 +1,37 @@
+<main class="menu" role="application" aria-label="Retro entry menu">
+    <header class="menu_header">
+    <h1 class="menu_title">The Architect’s Hub</h1>
+    <p class="menu_subtitle">Press ↑ ↓ to navigate, Enter to select, Esc to skip.</p>
+    </header>
+
+    <section class="menu_panel" role="menu" aria-label="Main menu">
+    @for (item of items; track item.route; let i = $index) {
+        <button
+        type="button"
+        class="menu_item"
+        role="menuitem"
+        [class.is-selected]="i === selectedIndex()"
+        [attr.aria-current]="i === selectedIndex() ? 'true' : null"
+        (click)="activate(i)"
+        >
+        <span class="menu_cursor" aria-hidden="true">{{ i === selectedIndex() ? '->' : ' ' }}</span>
+        <span class="menu_label">{{ item.label }}</span>
+
+        @if (item.hotkey) {
+            <span class="menu_hotkey" aria-hidden="true">[{{ item.hotkey }}]</span>
+        }
+        </button>
+    }
+    </section>
+
+    <footer class="menu_footer">
+    <button type="button" class="menu_aux" (click)="skipToCv()">
+        Skip Game → View CV <span class="kbd" aria-hidden="true">[Esc]</span>
+    </button>
+
+    <button type="button" class="menu_aux" (click)="toggleAudio()">
+        Sound: <strong>{{ audio.enabled() ? 'ON' : 'OFF' }}</strong>
+        <span class="kbd" aria-hidden="true">[S]</span>
+    </button>
+    </footer>
+</main>
