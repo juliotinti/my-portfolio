@@ -1,21 +1,25 @@
 import { TestBed } from '@angular/core/testing';
-import { RetroMenu } from './retro-menu';
 import { Router } from '@angular/router';
+import { describe, it, expect, beforeEach, vi } from 'vitest';
+
+import { RetroMenu } from './retro-menu';
 import { AudioStore } from '../../services/audio.store';
 
 describe('RetroMenuComponent', () => {
   let component: RetroMenu;
-  let router: jasmine.SpyObj<Router>;
+  let router: { navigateByUrl: ReturnType<typeof vi.fn> };
   let audio: AudioStore;
 
   beforeEach(() => {
-    router = jasmine.createSpyObj<Router>('Router', ['navigateByUrl']);
+    router = {
+      navigateByUrl: vi.fn(),
+    };
 
     TestBed.configureTestingModule({
       imports: [RetroMenu],
       providers: [
-        { provide: Router, useValue: router },
         AudioStore,
+        { provide: Router, useValue: router as unknown as Router },
       ],
     });
 
